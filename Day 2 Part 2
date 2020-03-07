@@ -1,0 +1,113 @@
+;
+using System.IO;
+
+namespace Day2_Part2
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            // Initialize variables
+            string chrComma = ",";
+            string CurChar = "";
+            int SearchValue = 19690720;
+            int MaxInput = 99;
+           
+
+            // Set data file
+            string textFile = @"C:\Users\Ken\source\repos\Advent 2019\AdventData\Day2.txt";
+
+            if (File.Exists(textFile))
+            {
+                // Read file line
+                string linedata = File.ReadAllText(textFile);
+                int CurrentVal = 0;
+                int MaxPosition = linedata.Length;
+                int[] IntList = new int[MaxPosition - 1];
+                int[] IntListSave = new int[MaxPosition - 1];
+                int IntIndex = 0;
+                for (int i = 0; i < MaxPosition; i++)
+                {
+                    // move values from text line to an integer array
+                    CurChar = linedata.Substring(i, 1);
+                    if (CurChar == chrComma)
+                    {
+                        IntList[IntIndex] = CurrentVal;
+                        CurrentVal = 0;
+                        IntIndex++;
+                    }
+                    else
+                    {
+                        CurrentVal = CurrentVal * 10 + Int32.Parse(linedata.Substring(i, 1));
+                    }
+
+                }
+                Console.WriteLine(linedata);
+                //save list values for next interation
+                for (int i = 0; i < IntIndex; i++)
+                {
+                    IntListSave[i] = IntList[i];
+                }
+                    
+
+                for (int noun = 0; noun < MaxInput; noun++)
+                {
+                    for (int verb = 0; verb < MaxInput; verb++)
+                    {
+                        //Reset list for next interation
+                        for (int i = 0; i < IntIndex; i++)
+                        {
+                            IntList[i] = IntListSave[i];
+                        }
+                        //Set positions 1 and 2 to find search value
+                        IntList[1] = noun;
+                        IntList[2] = verb;
+                      
+                       
+                        // Process integer values
+                        int NewValue = 0;
+
+                        for (int i = 0; i < IntIndex; i += 4)
+                        {
+                            if (IntList[i] == 99) // Stop processing 
+                            {
+                                // output integers to this point
+                           //     Console.WriteLine("Position 0 Integer value " + IntList[0] + " Noun " + noun + " Verb " + verb);
+                                //Exit For loop processing
+                                break;
+                            }
+                            // Get Positions
+                            int Position1 = IntList[i + 1];
+                            int Position2 = IntList[i + 2];
+                            int Position3 = IntList[i + 3];
+
+                            if (IntList[i] == 1) // Add values
+                            {
+                                NewValue = IntList[Position1] + IntList[Position2];
+                            }
+
+                            if (IntList[i] == 2) // Multiply values
+
+                            {
+                                NewValue = IntList[Position1] * IntList[Position2]; // Update destination position value
+                            }
+                         //   Console.WriteLine("search at " + noun + " and " + verb + " " + Position1 + " " + Position2 + " " + Position3);
+                            IntList[Position3] = NewValue;
+                        }
+
+                        // Is position zero value same as search value?
+                        if (IntList[0] == SearchValue)
+                        {
+                            Console.WriteLine("Found search value " + SearchValue + " at " + noun + " and " + verb);
+                            break;
+                        }
+                    }
+                    
+                }
+
+            }
+
+        }
+
+    }
+}
