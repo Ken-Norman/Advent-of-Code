@@ -39,10 +39,7 @@ namespace Advent_2019
 
             return (int) FuelAmount;
         }
-
-        
-
-        
+      
     }
 }
 
