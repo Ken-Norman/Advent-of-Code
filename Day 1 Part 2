@@ -50,8 +50,5 @@ namespace Day1_Part2
             return FuelAmount;
         }
 
-
-
-
     }
 }
