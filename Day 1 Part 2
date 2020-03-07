@@ -1,0 +1,57 @@
+using System;
+using System.IO;
+
+namespace Day1_Part2
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            // Initialize variables
+            int TotalFuel = 0;
+            // Set data file
+            string textFile = @"C:\Users\Ken\source\repos\Advent 2019\AdventData\Day1.txt";
+
+            if (File.Exists(textFile))
+            {
+                // Read file   
+                string[] lines = File.ReadAllLines(textFile);
+                foreach (string line in lines)
+                {
+                    // Calculate individual module fuel required
+                    int ModuleFuelNeeded = (int)CalculateFuel(Int32.Parse(line));
+
+                    TotalFuel += ModuleFuelNeeded;
+                    Console.WriteLine("Module mass is " + line + ". Fuel needed " + ModuleFuelNeeded);
+                }
+            }
+
+            //Report total calculated for fuel
+            Console.WriteLine("Total fuel required by Santa is: " + TotalFuel);
+        }
+
+        private static double CalculateFuel(double FuelMass)
+        {
+            // Fuel required for a module, take its mass, divide by three, round down, and subtract 2.
+            double FuelAmount = FuelMass / 3;
+            FuelAmount = Math.Floor(FuelAmount);
+            FuelAmount -= 2;
+
+            if (FuelAmount <= 0)
+            {
+                return 0;
+            } 
+            else
+            {
+                // Recursive call to get amount of fuel needed to for the last mass/fuel calculation
+                FuelAmount += CalculateFuel(FuelAmount);
+            }
+
+            return FuelAmount;
+        }
+
+
+
+
+    }
+}
