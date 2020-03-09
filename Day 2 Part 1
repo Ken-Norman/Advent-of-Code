@@ -1,7 +1,7 @@
 // Written by: Ken Norman
 // Date: 2020/03/08 
 // Day 2 Part 1 Advent of Code 2019
-
+ 
 using System;
 using System.IO;
 
