@@ -1,4 +1,7 @@
-;
+// Written by: Ken Norman
+// Date: 2020/03/08
+// Day 2 Part 2 Advent of Code 2019
+
 using System.IO;
 
 namespace Day2_Part2
